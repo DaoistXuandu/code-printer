@@ -95,6 +95,7 @@ export default function Print() {
                                         mb-3
                                 "/>
                             <button
+                                onClick={e => router.push("/pages/log")}
                                 style={{ backgroundColor: "#3B73B9" }}
                                 className="w-full h-fit p-2 text-white rounded font-medium text-md hover:scale-90"
                             >Ask to Print</button>
