@@ -39,6 +39,9 @@ export default function Log() {
             <div className="flex flex-row w-full pl-16 mt-10 pr-16 h-fit">
                 <div className="w-1/4 select-none">
                     <Sidebar logInformation={1} />
+
+                    <div className="mt-20">Apa yang terjadi kalau bukan admin?</div>
+                    <button onClick={e => setUser("")} className="w-20 h-6 bg-black">test</button>
                 </div>
                 <div className="w-3/4 h-full w-full pl-6 text-slate-100">
                     <table className="w-full">
@@ -74,7 +77,7 @@ export default function Log() {
                                                 Delivered
                                             </option>
                                         </select>
-                                        <svg style={{ pointerEvents: "none" }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 absolute right-0 mr-4">
+                                        <svg style={{ pointerEvents: "none", display: (user != "Admin" ? "none" : "flex") }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 absolute right-0 mr-4">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                         </svg>
                                     </td>
