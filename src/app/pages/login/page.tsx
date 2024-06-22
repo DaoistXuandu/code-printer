@@ -42,7 +42,7 @@ export default function Login() {
 
                             <button
                                 style={{ backgroundColor: (!isPressed ? "#3B73B9" : "#5DADE2") }}
-                                className="pr-3 pl-3 pt-2 pb-2 rounded text-sm "
+                                className="pr-3 pl-3 pt-2 pb-2 rounded text-sm hover:scale-90"
                                 disabled={isPressed}
                             // onClick={e => setIsPressed(true)}
                             >
