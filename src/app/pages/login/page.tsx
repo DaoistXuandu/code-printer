@@ -33,7 +33,7 @@ export default function Login() {
             password: password
         }
 
-        const res = await fetch('http://localhost:3000/pages/api/login', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_LINK}/login`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

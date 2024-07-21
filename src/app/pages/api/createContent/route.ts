@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
                 status: 0
             })
 
-            const userData = await fetch('http://localhost:3000/pages/api/updateAttempt', {
+            const userData = await fetch(`${process.env.NEXT_PUBLIC_LINK}/updateAttempt`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

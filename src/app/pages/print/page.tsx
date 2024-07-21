@@ -55,7 +55,7 @@ export default function Print() {
             return
         }
 
-        const res = await fetch('http://localhost:3000/pages/api/createContent', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_LINK}/createContent`, {
             method: 'POST',
             body: JSON.stringify({ code: code }),
             headers: {

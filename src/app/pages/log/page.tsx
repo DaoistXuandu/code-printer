@@ -48,7 +48,7 @@ export default function Log() {
     }
 
     async function getData() {
-        const username = await fetch('http://localhost:3000/pages/api/getUsername', {
+        const username = await fetch(`${process.env.NEXT_PUBLIC_LINK}/getUsername`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
@@ -59,9 +59,9 @@ export default function Log() {
 
 
         const first_part = username.split("_")
-        let url = 'http://localhost:3000/pages/api/getContentByUserId'
+        let url = `${process.env.NEXT_PUBLIC_LINK}/getContentByUserId`
         if (first_part[0] == "Admin") {
-            url = 'http://localhost:3000/pages/api/getContent'
+            url = `${process.env.NEXT_PUBLIC_LINK}/getContent`
             setUser("Admin")
         }
 
@@ -85,7 +85,7 @@ export default function Log() {
     }
 
     async function updateStatus(id: string, status: number) {
-        const res = await fetch('http://localhost:3000/pages/api/updateStatus', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_LINK}/updateStatus`, {
             method: 'PATCH',
             body: JSON.stringify({
                 id: id,

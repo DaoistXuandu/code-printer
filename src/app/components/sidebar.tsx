@@ -12,7 +12,7 @@ export default function Sidebar({ logInformation, attemptValue, adminStatus }: {
 
     const infoColour = { "red": "#E74C3C", "green": "#2ECC71", "darkGray": "#5C7080", "gray": "#2F424D", "mediumGray": "#3D505C", "grayFont": "#C7D0D8" }
     async function getAttempt() {
-        const res = await fetch('http://localhost:3000/pages/api/getAttempt', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_LINK}/getAttempt`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
@@ -26,7 +26,7 @@ export default function Sidebar({ logInformation, attemptValue, adminStatus }: {
     }
 
     async function getAdminAccess() {
-        const res = await fetch('http://localhost:3000/pages/api/checkAdmin', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_LINK}/checkAdmin`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
