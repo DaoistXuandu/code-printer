@@ -6,9 +6,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { materialDark, materialLight } from '@uiw/codemirror-theme-material';
 import { useRouter } from "next/navigation";
 import Sidebar from "@/app/components/sidebar";
-import axios from "axios";
 import PopUp from "@/app/components/popup";
-import { response } from "express";
 
 export default function Print() {
     const [code, setCode] = useState("")

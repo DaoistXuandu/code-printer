@@ -4,11 +4,8 @@ import Footer from "@/app/components/footer"
 import LabelInput from "@/app/components/labelInput"
 import NavBar from "@/app/components/navbar"
 import PopUp from "@/app/components/popup"
-import { strict } from "assert"
-import axios from "axios"
-import { response } from "express"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 
 export default function Login() {

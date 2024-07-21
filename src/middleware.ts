@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import axios from "axios";
 
 export async function middleware(request: NextRequest) {
     if (request.nextUrl.pathname == "/")
