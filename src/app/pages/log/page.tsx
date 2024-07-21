@@ -48,7 +48,7 @@ export default function Log() {
     }
 
     async function getData() {
-        const username = await fetch(`${process.env.NEXT_PUBLIC_LINK}/getUsername`, {
+        const username = await fetch(`https://code-printer-sigma.vercel.app/pages/api/getUsername`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
@@ -59,9 +59,9 @@ export default function Log() {
 
 
         const first_part = username.split("_")
-        let url = `${process.env.NEXT_PUBLIC_LINK}/getContentByUserId`
+        let url = `https://code-printer-sigma.vercel.app/pages/api/getContentByUserId`
         if (first_part[0] == "Admin") {
-            url = `${process.env.NEXT_PUBLIC_LINK}/getContent`
+            url = `https://code-printer-sigma.vercel.app/pages/api/getContent`
             setUser("Admin")
         }
 
@@ -85,7 +85,7 @@ export default function Log() {
     }
 
     async function updateStatus(id: string, status: number) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_LINK}/updateStatus`, {
+        const res = await fetch(`https://code-printer-sigma.vercel.app/pages/api/updateStatus`, {
             method: 'PATCH',
             body: JSON.stringify({
                 id: id,

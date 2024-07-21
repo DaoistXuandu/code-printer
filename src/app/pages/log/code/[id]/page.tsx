@@ -80,7 +80,7 @@ export default function Code({ params }: { params: { id: string } }) {
     async function getCode() {
         const id = params.id
 
-        const content = await fetch(`${process.env.NEXT_PUBLIC_LINK}/getContentById`, {
+        const content = await fetch(`https://code-printer-sigma.vercel.app/pages/api/getContentById`, {
             method: 'PATCH',
             body: JSON.stringify({ id: id }),
             headers: {

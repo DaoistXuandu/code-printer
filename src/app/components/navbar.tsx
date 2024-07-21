@@ -7,7 +7,7 @@ export default function NavBar({ status = false }) {
 
     async function handleLog() {
         if (status == true) {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_LINK}/logout`, {
+            const res = await fetch(`https://code-printer-sigma.vercel.app/pages/api/logout`, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json'
