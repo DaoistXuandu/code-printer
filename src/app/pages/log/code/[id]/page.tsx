@@ -2,14 +2,17 @@
 
 import CodeMirror from '@uiw/react-codemirror';
 import { materialDark, materialLight } from '@uiw/codemirror-theme-material';
+import { EditorView } from '@codemirror/view';
 import { useEffect, useState } from 'react';
 import NavBar from '@/app/components/navbar';
 import jsPDF from 'jspdf';
+import { useRouter } from 'next/navigation';
 
-export default function Code() {
+export default function Code({ params }: { params: { id: string } }) {
     const [code, setCode] = useState("")
     const [reset, setReset] = useState()
 
+    const router = useRouter()
     useEffect(() => {
         setCode("")
     }, [reset])
@@ -74,9 +77,29 @@ export default function Code() {
         saveAsPdf(code, "myfile.pdf");
     }
 
+    async function getCode() {
+        const id = params.id
+
+        const content = await fetch('http://localhost:3000/pages/api/getContentById', {
+            method: 'PATCH',
+            body: JSON.stringify({ id: id }),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(jsonFile => { return jsonFile.content.content })
+
+        setCode(content)
+    }
+
+    useEffect(() => {
+        getCode()
+    }, [])
+
     return (
         <div style={{ backgroundColor: "#3A4A59" }} className='w-full h-screen'>
-            <NavBar />
+            <NavBar status={true} />
             <div className="pl-16 pr-16 mt-10 flex flex-row items-start">
                 <button
                     className='p-3 rounded bg-blue-500 hover:bg-blue-300'
@@ -85,8 +108,10 @@ export default function Code() {
                     height="500px"
                     value={code}
                     className="w-full pl-8"
-                    onChange={e => setCode(e)}
                     theme={materialDark}
+                    extensions={[
+                        EditorView.editable.of(false), // This extension makes the editor read-only
+                    ]}
                 />
             </div>
         </div>

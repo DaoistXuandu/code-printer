@@ -6,21 +6,23 @@ import CodeMirror from '@uiw/react-codemirror';
 import { materialDark, materialLight } from '@uiw/codemirror-theme-material';
 import { useRouter } from "next/navigation";
 import Sidebar from "@/app/components/sidebar";
-
+import axios from "axios";
+import PopUp from "@/app/components/popup";
+import { response } from "express";
 
 export default function Print() {
     const [code, setCode] = useState("")
     const [theme, setTheme] = useState(0)
-    const [attempt, setAttempt] = useState(0)
     const [statusInfo, setStatusInfo] = useState("")
     const [textInfo, setTextInfo] = useState("")
+    const [isPressed, setIsPressed] = useState(false)
+    const [admin, setAdmin] = useState(false)
 
     const file = useRef<HTMLInputElement>(null);
     const router = useRouter()
 
     let themeGroup = [materialDark, materialLight]
     let themeGroupColor = ["#545C62", "#ABB2B9"]
-    // red, green
     let infoColour = { "red": "#E74C3C", "green": "#2ECC71", "darkGray": "#5C7080", "gray": "#2F424D", "mediumGray": "#3D505C", "grayFont": "#C7D0D8" }
 
     function generateInfo(text: string, color: string) {
@@ -29,6 +31,41 @@ export default function Print() {
         setTimeout(() => {
             setStatusInfo("")
         }, 3000)
+    }
+
+    function adminStatus(status: boolean) {
+        if (status)
+            setAdmin(true)
+    }
+
+    useEffect(() => {
+        if (admin)
+            setIsPressed(true)
+    }, [admin])
+
+    function handleAttempt(attempt: number) {
+        if (attempt >= 20) {
+            setIsPressed(true)
+        }
+    }
+
+    async function handlePrint() {
+        setIsPressed(true)
+        if (!code) {
+            generateInfo("You can't print blank paper/code", infoColour.red)
+            setIsPressed(false)
+            return
+        }
+
+        const res = await fetch('http://localhost:3000/pages/api/createContent', {
+            method: 'POST',
+            body: JSON.stringify({ code: code }),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+
+        router.push("/pages/log")
     }
 
     function handleCopy() {
@@ -67,14 +104,13 @@ export default function Print() {
         }
     }
 
-
     return (
         <div style={{ backgroundColor: "#3A4A59" }} className="w-full h-screen">
-            <NavBar />
+            <NavBar status={true} />
 
             <div className="flex flex-row w-full pl-16 mt-10 pr-16 h-fit">
                 <div className="flex flex-col w-1/4 select-none">
-                    <Sidebar logInformation={0} />
+                    <Sidebar attemptValue={handleAttempt} logInformation={0} adminStatus={adminStatus} />
                     <div style={{ backgroundColor: infoColour.gray, borderWidth: "0.5px", color: infoColour.grayFont }} className="mt-20 rounded border border-black">
                         <div className="text-2xl p-3 font-bold">
                             Print Info
@@ -95,9 +131,10 @@ export default function Print() {
                                         mb-3
                                 "/>
                             <button
-                                onClick={e => router.push("/pages/log")}
-                                style={{ backgroundColor: "#3B73B9" }}
-                                className="w-full h-fit p-2 text-white rounded font-medium text-md hover:scale-90"
+                                disabled={isPressed || admin}
+                                onClick={handlePrint}
+                                style={{ backgroundColor: (!isPressed ? "#3B73B9" : "#85C1E9") }}
+                                className={`w-full h-fit p-2 text-white rounded font-medium text-md ${isPressed ? "scale-90" : "hover:scale-90"} `}
                             >Ask to Print</button>
                         </div>
                     </div>
@@ -134,18 +171,8 @@ export default function Print() {
                     </div>
                 </div>
             </div>
-
             <Footer />
-            <div style={{ display: (statusInfo == "" ? "none" : "flex"), backgroundColor: statusInfo }} className="flex flex-row fixed bottom-0 right-0 mr-10 mb-10 p-5 rounded font-bold">
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 mr-2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                    </svg>
-                </div>
-                <div>
-                    {textInfo}
-                </div>
-            </div>
+            <PopUp statusInfo={statusInfo} textInfo={textInfo} />
         </div >
     )
 }

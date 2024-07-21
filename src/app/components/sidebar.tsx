@@ -1,15 +1,50 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-export default function Sidebar({ logInformation }: { logInformation: number }) {
-
+export default function Sidebar({ logInformation, attemptValue, adminStatus }: { logInformation: number, attemptValue: (attempt: number) => void, adminStatus: (status: boolean) => void }) {
+    const [start, setStart] = useState(0)
     const [attempt, setAttempt] = useState(0)
+    const [admin, setAdmin] = useState(false)
 
     const router = useRouter()
 
     const infoColour = { "red": "#E74C3C", "green": "#2ECC71", "darkGray": "#5C7080", "gray": "#2F424D", "mediumGray": "#3D505C", "grayFont": "#C7D0D8" }
+    async function getAttempt() {
+        const res = await fetch('http://localhost:3000/pages/api/getAttempt', {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(jsonFile => {
+                attemptValue(jsonFile.attempt)
+                setAttempt(jsonFile.attempt)
+            })
+    }
+
+    async function getAdminAccess() {
+        const res = await fetch('http://localhost:3000/pages/api/checkAdmin', {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(jsonFile => {
+                if (jsonFile.admin) {
+                    adminStatus(true)
+                    setAdmin(true)
+                }
+            })
+    }
+
+    useEffect(() => {
+        getAdminAccess()
+        getAttempt()
+    }, [start])
 
     return (
         <div>
@@ -20,7 +55,7 @@ export default function Sidebar({ logInformation }: { logInformation: number }) 
                 <div className="border border-black border-r-0 border-l-0 border-b-0 border-0.5">
                     <div
                         style={{ fontWeight: (logInformation == 1 ? "" : "bold") }}
-                        className={`w-full h-fit flex text-xl flex flex-row items-center p-3 bg-${logInformation == 0 ? "slate-500" : "transparent hover:bg-slate-600"} `}
+                        className={`w-full h-fit flex text-xl flex flex-row items-center p-3 ${logInformation == 0 ? "bg-slate-600" : "bg-transparent hover:bg-slate-600"}`}
                         onClick={e => router.push("/pages/print")}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-5">
@@ -32,7 +67,7 @@ export default function Sidebar({ logInformation }: { logInformation: number }) 
                     </div>
                     <div
                         style={{ borderColor: "#202A33" }}
-                        className={`p-3 rounded-bl rounded-br bg-${logInformation == 1 ? "slate-500" : "transparent hover:bg-slate-600"}`}
+                        className={`p-3 rounded-bl rounded-br ${logInformation == 1 ? "bg-slate-600" : "bg-transparent hover:bg-slate-600"}`}
                         onClick={e => router.push("/pages/log")}
                     >
                         <div style={{ fontWeight: (logInformation == 0 ? "" : "bold") }} className="w-full h-fit flex text-xl flex flex-row items-center">
@@ -45,7 +80,7 @@ export default function Sidebar({ logInformation }: { logInformation: number }) 
                                 Log History
                             </div>
                         </div>
-                        <div style={{ fontSize: 12, color: "#EC7063" }} className="mt-0">
+                        <div style={{ fontSize: 12, color: "#EC7063", display: (admin ? "none" : "flex") }} className="mt-0">
                             {attempt}/20 attempt
                         </div>
                     </div>

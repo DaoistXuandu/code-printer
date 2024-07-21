@@ -1,11 +1,17 @@
 "use client"
 
-import { useState } from "react"
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
-export default function NavBar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+export default function NavBar({ status = false }) {
     const router = useRouter()
+
+    async function handleLog() {
+        if (status == true) {
+            const response = await axios.get('http://localhost:3000/pages/api/logout')
+        }
+        router.push("/pages/login")
+    }
 
     return (
         <div style={{ backgroundColor: "#0C5174", color: "#C6CFD7" }} className="flex flex-row w-full h-fit pt-2.5 pb-2.5 pl-16 pr-16 items-center drop-shadow-md select-none">
@@ -16,11 +22,11 @@ export default function NavBar() {
                     <p className="text-sm">Printing Site</p>
                 </div>
             </div>
-            <div style={{ cursor: "pointer" }} className="w-1/2 flex justify-end text-sm" onClick={e => router.push("/pages/login")}>
+            <div style={{ cursor: "pointer" }} className="w-1/2 flex justify-end text-sm" onClick={handleLog}>
                 <div className="border border-t-0 border-l-0 border-r-0 border-transparent hover:border-white hover:text-white p-0.5 select-none">
                     Log
                     {
-                        isLoggedIn ? " Out" : " In"
+                        status ? " Out" : " In"
                     }
                 </div>
             </div>

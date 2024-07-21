@@ -3,19 +3,63 @@
 import Footer from "@/app/components/footer"
 import LabelInput from "@/app/components/labelInput"
 import NavBar from "@/app/components/navbar"
+import PopUp from "@/app/components/popup"
+import { strict } from "assert"
+import axios from "axios"
+import { response } from "express"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
 
 export default function Login() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [isPressed, setIsPressed] = useState(false)
+    const [statusInfo, setStatusInfo] = useState("")
+    const [textInfo, setTextInfo] = useState("")
 
     const router = useRouter();
 
+    let infoColour = { "red": "#E74C3C", "green": "#2ECC71", "darkGray": "#5C7080", "gray": "#2F424D", "mediumGray": "#3D505C", "grayFont": "#C7D0D8" }
+
+    function generateInfo(text: string, color: string) {
+        setTextInfo(text)
+        setStatusInfo(color)
+        setTimeout(() => {
+            setStatusInfo("")
+        }, 3000)
+    }
+
+    async function checkUser(username: string, password: string) {
+        const data = {
+            username: username,
+            password: password
+        }
+
+        const res = await fetch('http://localhost:3000/pages/api/login', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(jsonFile => {
+                if (jsonFile.permission) {
+                    router.push("/pages/print")
+                }
+                else {
+                    setUsername("")
+                    setPassword("")
+                    setIsPressed(false)
+                    generateInfo("Password atau Username salah!", infoColour.red)
+                }
+            })
+    }
+
     function handleSubmit() {
         setIsPressed(true)
-        router.push("/pages/print")
+        checkUser(username, password)
     }
 
     function changeUsername(updateValue: string) {
@@ -35,14 +79,14 @@ export default function Login() {
                         <div style={{ color: "#C6CFD7" }} className="text-xl font-bold">Log In</div>
                         <form action={handleSubmit}>
                             <div style={{ borderColor: "#596D7B" }} className="border border-l-0 border-r-0 border-white pt-4 pb-4 mt-3 mb-3">
-                                < LabelInput changeValue={changeUsername} label="Username" />
+                                < LabelInput value={username} changeValue={changeUsername} label="Username" />
                                 <div className="mt-3"></div>
-                                < LabelInput changeValue={changePassword} label="Password" />
+                                < LabelInput value={password} changeValue={changePassword} label="Password" />
                             </div>
 
                             <button
                                 style={{ backgroundColor: (!isPressed ? "#3B73B9" : "#5DADE2") }}
-                                className="pr-3 pl-3 pt-2 pb-2 rounded text-sm hover:scale-90"
+                                className={`pr-3 pl-3 pt-2 pb-2 rounded text-sm ${isPressed ? "scale-90" : 'hover:scale-90'}`}
                                 disabled={isPressed}
                             // onClick={e => setIsPressed(true)}
                             >
@@ -53,7 +97,8 @@ export default function Login() {
                 </div>
             </div>
             <Footer />
-        </div>
+            <PopUp statusInfo={statusInfo} textInfo={textInfo} />
+        </div >
     )
 }
 
