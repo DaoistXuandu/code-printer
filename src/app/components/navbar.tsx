@@ -1,14 +1,18 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 export default function NavBar({ status = false }) {
     const router = useRouter()
 
     async function handleLog() {
         if (status == true) {
-            const response = await axios.get('http://localhost:3000/pages/api/logout')
+            const res = await fetch('http://localhost:3000/pages/api/logout', {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
         }
         router.push("/pages/login")
     }
