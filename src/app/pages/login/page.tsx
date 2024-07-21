@@ -33,7 +33,7 @@ export default function Login() {
             password: password
         }
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_LINK}/login`, {
+        const res = await fetch(`https://code-printer-sigma.vercel.app/pages/api/login`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
