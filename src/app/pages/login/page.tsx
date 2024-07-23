@@ -76,9 +76,9 @@ export default function Login() {
                         <div style={{ color: "#C6CFD7" }} className="text-xl font-bold">Log In</div>
                         <form action={handleSubmit}>
                             <div style={{ borderColor: "#596D7B" }} className="border border-l-0 border-r-0 border-white pt-4 pb-4 mt-3 mb-3">
-                                < LabelInput value={username} changeValue={changeUsername} label="Username" />
+                                < LabelInput value={username} changeValue={changeUsername} label="Username" type="text" />
                                 <div className="mt-3"></div>
-                                < LabelInput value={password} changeValue={changePassword} label="Password" />
+                                < LabelInput value={password} changeValue={changePassword} label="Password" type="password" />
                             </div>
 
                             <button
