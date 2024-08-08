@@ -48,7 +48,7 @@ export default function Log() {
     }
 
     async function getData() {
-        const username = await fetch(`https://code-printer-sigma.vercel.app/pages/api/getUsername`, {
+        const username = await fetch(`${process.env.NEXT_PUBLIC_PORT}/api/getUsername`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
@@ -59,9 +59,9 @@ export default function Log() {
 
 
         const first_part = username.split("_")
-        let url = `https://code-printer-sigma.vercel.app/pages/api/getContentByUserId`
+        let url = `${process.env.NEXT_PUBLIC_PORT}/api/getContentByUserId`
         if (first_part[0] == "Admin") {
-            url = `https://code-printer-sigma.vercel.app/pages/api/getContent`
+            url = `${process.env.NEXT_PUBLIC_PORT}/api/getContent`
             setUser("Admin")
         }
 
@@ -85,7 +85,7 @@ export default function Log() {
     }
 
     async function updateStatus(id: string, status: number) {
-        const res = await fetch(`https://code-printer-sigma.vercel.app/pages/api/updateStatus`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PORT}/api/updateStatus`, {
             method: 'PATCH',
             body: JSON.stringify({
                 id: id,
@@ -166,7 +166,7 @@ export default function Log() {
     return (
         <div style={{ backgroundColor: "#3A4A59" }} className="w-full min-h-screen h-fit">
             <NavBar status={true} />
-            <div className="flex flex-row w-full pl-16 mt-10 pr-16 h-fit">
+            <div className="flex flex-row w-full pl-16 mt-10 pr-16 h-fit pb-20">
                 <div className="w-1/4 select-none">
                     <Sidebar attemptValue={(x: number) => { }} logInformation={1} adminStatus={adminStatus} />
                 </div>
@@ -186,7 +186,9 @@ export default function Log() {
                     </table>
                 </div>
             </div>
-            <Footer />
+            <div className="w-full fixed bottom-0 left-0">
+                <Footer />
+            </div>
         </div >
     )
 

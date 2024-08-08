@@ -55,7 +55,7 @@ export default function Print() {
             return
         }
 
-        const res = await fetch(`https://code-printer-sigma.vercel.app/pages/api/createContent`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PORT}/api/createContent`, {
             method: 'POST',
             body: JSON.stringify({ code: code }),
             headers: {

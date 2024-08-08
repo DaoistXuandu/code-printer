@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
                 status: 0
             })
 
-            const userData = await fetch(`https://code-printer-sigma.vercel.app/pages/api/updateAttempt`, {
+            const userData = await fetch(`${process.env.NEXT_PUBLIC_PORT}/api/updateAttempt`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

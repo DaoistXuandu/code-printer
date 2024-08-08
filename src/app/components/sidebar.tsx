@@ -12,7 +12,7 @@ export default function Sidebar({ logInformation, attemptValue, adminStatus }: {
 
     const infoColour = { "red": "#E74C3C", "green": "#2ECC71", "darkGray": "#5C7080", "gray": "#2F424D", "mediumGray": "#3D505C", "grayFont": "#C7D0D8" }
     async function getAttempt() {
-        const res = await fetch(`https://code-printer-sigma.vercel.app/pages/api/getAttempt`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PORT}/api/getAttempt`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
@@ -26,7 +26,7 @@ export default function Sidebar({ logInformation, attemptValue, adminStatus }: {
     }
 
     async function getAdminAccess() {
-        const res = await fetch(`https://code-printer-sigma.vercel.app/pages/api/checkAdmin`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PORT}/api/checkAdmin`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json'
@@ -55,7 +55,7 @@ export default function Sidebar({ logInformation, attemptValue, adminStatus }: {
                 <div className="border border-black border-r-0 border-l-0 border-b-0 border-0.5">
                     <div
                         style={{ fontWeight: (logInformation == 1 ? "" : "bold") }}
-                        className={`w-full h-fit flex text-xl flex flex-row items-center p-3 ${logInformation == 0 ? "bg-slate-600" : "bg-transparent hover:bg-slate-600"}`}
+                        className={`${admin ? 'hidden' : ''} w-full h-fit flex text-xl flex flex-row items-center p-3 ${logInformation == 0 ? "bg-slate-600" : "bg-transparent hover:bg-slate-600"}`}
                         onClick={e => router.push("/pages/print")}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-5">
