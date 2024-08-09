@@ -63,9 +63,9 @@ export default function Log() {
 
         let url = `${process.env.NEXT_PUBLIC_PORT}/api/getContentByUserId`
         const first_part = username.split("_")
-        if (first_part[0] == "Admin") {
+        if (first_part[0] == "admin") {
             url = `${process.env.NEXT_PUBLIC_PORT}/api/getContent`
-            setUser("Admin")
+            setUser("admin")
         }
 
         const res = await fetch(url, {
@@ -148,7 +148,7 @@ export default function Log() {
                                         <td className="p-3 border-t-0 border-b-0 border-r-0 justify-start w-3/12 border border-slate-500">{col[1]}</td>
                                         <td className="relative border-t-0 border-b-0 border-r-0 flex justify-start items-center w-3/12 border border-slate-500">
                                             <select
-                                                disabled={(user != "Admin")}
+                                                disabled={(user != "admin")}
                                                 style={{ appearance: "none", backgroundColor: (typeof col[2] == "number" ? statusColor[col[2]] : statusColor[0]), backgroundPosition: "center" }}
                                                 className="text-sm m-1 pl-6 pr-6 p-2 rounded-full w-full flex items-center "
                                                 value={col[2].valueOf()}
@@ -164,7 +164,7 @@ export default function Log() {
                                                     Delivered
                                                 </option>
                                             </select>
-                                            <svg style={{ pointerEvents: "none", display: (user != "Admin" ? "none" : "flex") }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 absolute right-0 mr-4">
+                                            <svg style={{ pointerEvents: "none", display: (user != "admin" ? "none" : "flex") }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 absolute right-0 mr-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                             </svg>
                                         </td>

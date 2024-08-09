@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
             if (result) {
                 cookies().set("print-session", user?._id.toString())
                 const user_split = user.username.split("_")
-                if (user_split[0] == "Admin") {
+                if (user_split[0] == "admin") {
                     cookies().set("admin-session", "access")
                 }
                 return NextResponse.json({
