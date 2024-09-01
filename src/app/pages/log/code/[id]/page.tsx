@@ -101,9 +101,21 @@ export default function Code({ params }: { params: { id: string } }) {
         <div style={{ backgroundColor: "#3A4A59" }} className='w-full h-screen'>
             <NavBar status={true} />
             <div className="pl-16 pr-16 mt-10 flex flex-row items-start">
-                <button
-                    className='p-3 rounded bg-blue-500 hover:bg-blue-300'
-                    onClick={download}>Download</button>
+                <div className="flex flex-col space-y-8">
+                    <button
+                        className='p-3 rounded bg-blue-500 hover:bg-blue-300'
+                        onClick={download}>Download</button>
+                    <button
+                        className=' flex flex-row space-x-2 p-3 rounded border-2 border-blue-500 text-blue-500 font-bold hover:text-white hover:bg-blue-500 items-center justify-center'
+                        onClick={e => router.push("/pages/log")}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="size-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                        </svg>
+                        <p>
+                            Back
+                        </p>
+                    </button>
+                </div>
                 <CodeMirror
                     height="500px"
                     value={code}
