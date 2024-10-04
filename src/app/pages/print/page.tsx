@@ -139,7 +139,7 @@ export default function Print() {
                 </div>
                 <div className="w-3/4 h-full pl-6 flex flex-row">
                     <CodeMirror
-                        height="550px"
+                        height="500px"
                         value={code}
                         className="w-full max-h-full"
                         onChange={e => setCode(e)}
