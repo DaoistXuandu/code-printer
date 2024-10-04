@@ -10,6 +10,9 @@ export async function POST(request: NextRequest) {
         const salt = genSaltSync(10)
         const hashedPassword = hashSync(password, salt)
 
+        // disable route
+        throw "Shits"
+
         const duplicate = await User.findOne({ username: username })
         if (duplicate)
             throw "Username already exist!"

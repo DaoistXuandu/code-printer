@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from "react"
 import { rowData } from "@/app/lib/interface/rowData"
 import { Admin } from "mongodb"
 import { statSync } from "fs"
+import { reverse } from "dns"
 
 export default function Log() {
     const [user, setUser] = useState("")
@@ -83,6 +84,13 @@ export default function Log() {
             newData.push(row)
         });
 
+        newData.sort((a, b) => {
+            const dateA = new Date(a[3])
+            const dateB = new Date(b[3])
+
+            return dateB.getTime() - dateA.getTime()
+        })
+
         setStatus(true)
         setData(newData)
     }
@@ -144,8 +152,8 @@ export default function Log() {
                                 data.map((col, index) => (
                                     <tr className={`border border-1 flex flex-row border-slate-500 w-1/`} style={{ backgroundColor: (index % 2 == 0 ? infoColour.lightGray : "") }}>
                                         <td className="p-3 border-t-0 border-b-0 border-r-0 justify-start w-1/12">{index + 1}</td>
-                                        <td className="p-3 border-t-0 border-b-0 border-r-0 justify-start w-3/12 border border-slate-500 flex">{col[0]}</td>
-                                        <td className="p-3 border-t-0 border-b-0 border-r-0 justify-start w-3/12 border border-slate-500">{col[1]}</td>
+                                        <td className="p-3 border-t-0 border-b-0 border-r-0 justify-start w-3/12 border border-slate-500 flex overflow-scroll">{col[0]}</td>
+                                        <td className="p-3 border-t-0 border-b-0 border-r-0 justify-start w-3/12 border border-slate-500 overflow-scroll">{col[1]}</td>
                                         <td className="relative border-t-0 border-b-0 border-r-0 flex justify-start items-center w-3/12 border border-slate-500">
                                             <select
                                                 disabled={(user != "admin")}

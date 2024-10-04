@@ -139,9 +139,9 @@ export default function Print() {
                 </div>
                 <div className="w-3/4 h-full pl-6 flex flex-row">
                     <CodeMirror
-                        height="600px"
+                        height="550px"
                         value={code}
-                        className="w-full"
+                        className="w-full max-h-full"
                         onChange={e => setCode(e)}
                         theme={themeGroup[theme]}
                     />

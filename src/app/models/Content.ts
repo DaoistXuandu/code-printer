@@ -19,4 +19,6 @@ const ContentSchema = new Schema({
     }
 }, { versionKey: false, timestamps: true });
 
+ContentSchema.index({ "teamName": 1 });
+
 export default mongoose.models.Content || mongoose.model("Content", ContentSchema)
