@@ -50,7 +50,7 @@ export default function Print() {
     async function handlePrint() {
         setIsPressed(true)
         if (!code) {
-            generateInfo("You can't print blank paper/code", infoColour.red)
+            generateInfo("You can't print blank paper/code!!", infoColour.red)
             setIsPressed(false)
             return
         }
