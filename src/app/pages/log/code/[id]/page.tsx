@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 export default function Code({ params }: { params: { id: string } }) {
     const [code, setCode] = useState("")
     const [reset, setReset] = useState()
+    const [name, setName] = useState("")
 
     const router = useRouter()
     useEffect(() => {
@@ -78,7 +79,11 @@ export default function Code({ params }: { params: { id: string } }) {
     }
 
     async function getCode() {
-        const id = params.id
+        const url = params.id.split("-")
+        const id = url[0]
+        const name = url[1]
+        // const id = params.id
+        // console.log(url)
 
         const content = await fetch(`${process.env.NEXT_PUBLIC_PORT}/api/getContentById`, {
             method: 'PATCH',
@@ -91,6 +96,7 @@ export default function Code({ params }: { params: { id: string } }) {
             .then(jsonFile => { return jsonFile.content.content })
 
         setCode(content)
+        setName(name)
     }
 
     useEffect(() => {
@@ -115,6 +121,7 @@ export default function Code({ params }: { params: { id: string } }) {
                             Back
                         </p>
                     </button>
+                    <div>{name}</div>
                 </div>
                 <CodeMirror
                     height="500px"
@@ -126,6 +133,6 @@ export default function Code({ params }: { params: { id: string } }) {
                     ]}
                 />
             </div>
-        </div>
+        </div >
     )
 }

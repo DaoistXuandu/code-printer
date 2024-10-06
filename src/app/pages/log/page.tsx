@@ -178,7 +178,7 @@ export default function Log() {
                                         </td>
                                         <td className="p-3 border-t-0 border-b-0 border-r-0 justify-start w-1/12 border border-slate-500">{getDiffrence(col[3])}</td>
                                         <td className="p-3 border-t-0 border-b-0 border-r-0 justify-start w-1/12 border border-slate-500">
-                                            <svg xmlns="http://www.w3.org/2000/svg" style={{ cursor: "pointer" }} fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#47A9E7" className="size-6" onClick={e => router.push(`/pages/log/code/${col[0]}`)}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" style={{ cursor: "pointer" }} fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#47A9E7" className="size-6" onClick={e => router.push(`/pages/log/code/${col[0]}-${col[1]}`)}>
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                             </svg>
                                         </td>
